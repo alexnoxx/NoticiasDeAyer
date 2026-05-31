@@ -7,18 +7,17 @@ import io.kotest.core.spec.style.DescribeSpec
 class AgenciaANSITest: DescribeSpec({
     isolationMode = IsolationMode.InstancePerTest
 
-    class AgenciaANSIStub() : IAgenciaANSI {
-        val mensajesEnviados = mutableListOf<MensajeANSI>()
-
-        override fun enviarNoticia(mensaje: MensajeANSI){
-            mensajesEnviados.add(mensaje)
-        }
-    }
-
-    val stubANSI = AgenciaANSIStub()
+    //describe(""){
+    val stubANSI = StubAgenciaANSI()
 
 
 
 })
 
+class StubAgenciaANSI() : IAgenciaANSI {
+    val mensajesEnviados = mutableListOf<MensajeANSI>()
 
+    override fun enviarNoticia(mensaje: MensajeANSI){
+        mensajesEnviados.add(mensaje)
+    }
+}
