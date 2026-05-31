@@ -22,7 +22,7 @@ class PagarAPeriodistaObserver(): INoticiaObserver
     }
 }
 
-class mailObserver(val mailSender: MailSender,
+class MailObserver(val mailSender: MailSender,
                    val mailEditor: String): INoticiaObserver {
 
     override fun realizarAccion(publicacion: Publicacion) {
@@ -42,7 +42,7 @@ class mailObserver(val mailSender: MailSender,
 }
 
 
-class enviarAANSIObserver(val agencia: IAgenciaANSI): INoticiaObserver {
+class EnviarAANSIObserver(val agencia: IAgenciaANSI): INoticiaObserver {
 
     override fun realizarAccion(publicacion: Publicacion) {
         publicacion.listaNoticias.forEach { noticia -> agencia.enviarNoticia(
