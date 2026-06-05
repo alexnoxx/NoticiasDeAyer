@@ -3,7 +3,7 @@ package ar.edu.unsam.algo2
 import java.time.LocalDate
 
 
-class Administrador(val criterioNoticia: CriterioNoticia, //recibe/inyecta un criterio simple o combinado
+class Diario(val criterioNoticia: CriterioNoticia, //recibe/inyecta un criterio simple o combinado
                     var listaNoticiasConfirmadas: MutableList<Noticia> = mutableListOf()) //Context
 {
 

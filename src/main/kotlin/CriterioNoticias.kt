@@ -5,14 +5,14 @@ interface CriterioNoticia{
 }
 
 
-class CriterioPreferenciaPeriodista():CriterioNoticia
+object criterioPreferenciaPeriodista:CriterioNoticia
 {
     override fun cumpleCondicion(noticia: Noticia): Boolean {
         return noticia.periodistaAsociado.leGustaLaNoticiaAlPeriodista(noticia)
     }
 }
 
-class CriterioSensacionalista():CriterioNoticia
+object criterioSensacionalista:CriterioNoticia
 {
     override fun cumpleCondicion(noticia: Noticia): Boolean{
         return noticia.esSensacionalista()

@@ -24,21 +24,21 @@ interface IPreferenciasGrillo{//como el periodista del Eternauta
 }
 
 
-class QuiereNoticiasCopadas(): IPreferenciasGrillo
+object quiereNoticiasCopadas: IPreferenciasGrillo
 {
  override fun preferenciasLeGusta(noticia: Noticia): Boolean {
     return (noticia.esCopada())
  }
 }
 
-class QuierePublicarSensacionalistas(): IPreferenciasGrillo
+class quierePublicarSensacionalistas: IPreferenciasGrillo
 {
     override fun preferenciasLeGusta(noticia: Noticia): Boolean {
         return noticia.esSensacionalista()
     }
 }
 
-class JoseDeZer(): IPreferenciasGrillo
+object joseDeZer: IPreferenciasGrillo
 {
     override fun preferenciasLeGusta(noticia: Noticia): Boolean {
         return noticia.comienzaConT()

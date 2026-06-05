@@ -4,7 +4,7 @@ interface IAgenciaANSI{ //Esta interface me va a conectar con el Stub
     fun enviarNoticia(mensaje: MensajeANSI)
 }
 
-data class MensajeANSI (val codNoticia: String,
-                         val desarrollo: String,
-                         val nombrePeriodista: String,
-                         val prioridad: String)
+data class MensajeANSI (var codNoticia: String,
+                         var desarrollo: String,
+                         var nombrePeriodista: String,
+                         var prioridad: String)

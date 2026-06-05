@@ -5,7 +5,7 @@ import java.time.Period
 
 abstract class Noticia(
                         val codNoticia: String,
-                        val fechaEnQueFueEscrito: LocalDate,
+                        val fechaEnQueFueEscrito: LocalDate = LocalDate.now(),
                         val periodistaAsociado: Periodista,
                         val gradoImportancia: Int,
                         val titulo: String,
