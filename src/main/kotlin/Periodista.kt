@@ -2,45 +2,44 @@ package ar.edu.unsam.algo2
 
 import java.time.LocalDate
 
-class Periodista(val nombre: String, //Context
+class Periodista(val nombre: String = "", //Context
                  val fechaIngreso: LocalDate,
-                 val preferencias: IPreferenciasGrillo,
-                 var sueldo: Double = 0.0)
+                 val preferencias: PreferenciaPublicacion,
+                 var sueldo: Int = 0)
 {
     fun leGustaLaNoticiaAlPeriodista(noticia: Noticia): Boolean{
         return preferencias.preferenciasLeGusta(noticia)
     }
 
-    fun recibirPago(pago: Double): Double{
+    fun recibirPago(pago: Int){
         sueldo = sueldo + pago
-        return sueldo
     }
 
 
 }
 
-interface IPreferenciasGrillo{//como el periodista del Eternauta
+interface PreferenciaPublicacion{
     fun preferenciasLeGusta(noticia: Noticia): Boolean //en principio devuelve boolean
 }
 
 
-object quiereNoticiasCopadas: IPreferenciasGrillo
+object quiereNoticiasCopadas: PreferenciaPublicacion
 {
  override fun preferenciasLeGusta(noticia: Noticia): Boolean {
     return (noticia.esCopada())
  }
 }
 
-class quierePublicarSensacionalistas: IPreferenciasGrillo
+object quierePublicarSensacionalistas: PreferenciaPublicacion
 {
     override fun preferenciasLeGusta(noticia: Noticia): Boolean {
         return noticia.esSensacionalista()
     }
 }
 
-object joseDeZer: IPreferenciasGrillo
+object joseDeZer: PreferenciaPublicacion
 {
     override fun preferenciasLeGusta(noticia: Noticia): Boolean {
-        return noticia.comienzaConT()
+        return noticia.comienzaConT("T")
     }
 }

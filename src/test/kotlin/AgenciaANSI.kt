@@ -3,7 +3,7 @@ package ar.edu.unsam.algo2
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
-
+/* El Stub seria una implementacion de resguardo
 class AgenciaANSITest: DescribeSpec({
     isolationMode = IsolationMode.InstancePerTest
 
@@ -21,3 +21,4 @@ class StubAgenciaANSI() : IAgenciaANSI {
         mensajesEnviados.add(mensaje)
     }
 }
+*/

@@ -4,7 +4,6 @@ import java.time.LocalDate
 import java.time.Period
 
 abstract class Noticia(
-                        val codNoticia: String,
                         val fechaEnQueFueEscrito: LocalDate = LocalDate.now(),
                         val periodistaAsociado: Periodista,
                         val gradoImportancia: Int,
@@ -37,8 +36,8 @@ abstract class Noticia(
 
     open fun condicionEspecificaEsSensacionalista(): Boolean = true
 
-    fun comienzaConT(): Boolean{
-        return titulo.startsWith("T", ignoreCase = true)
+    fun comienzaConT(letra: String): Boolean{
+        return titulo.startsWith(letra, ignoreCase = true)
     }
 
     fun antiguedadNoticia(): Int {
@@ -46,25 +45,52 @@ abstract class Noticia(
     }
 
     abstract fun esEspecial(): Boolean
-
+/* metodo que tenia antes
     fun cantidadPalabras(): Int {
         return desarrollo.split(" ").size
     }
-
+*/
     fun esDeHoy(): Boolean{
         return fechaEnQueFueEscrito == LocalDate.now()
     }
-}
 
-class ArticuloComun(codNoticia: String = "02", //hardodeado T_T
-                    fechaEnQueFueEscrito: LocalDate,
+    fun leGustaAQuienLaEscribe(): Boolean = periodistaAsociado.leGustaLaNoticiaAlPeriodista(this)
+
+    fun pagarAPeriodistaAsociado(){
+        periodistaAsociado.recibirPago(valor())
+    }
+
+    fun valor(): Int = if(cantidadPalabras() > 1000) 75 else 50
+
+    fun cantidadPalabras() = desarrollo.words().size
+
+    abstract fun codigoNoticia(): String
+
+    fun prioridad(): String = "" //aca se puede usar un when para clasificar los diferentes casos del ultimo observer que nos piden
+
+    fun generarNoticiaANSI() = MensajeANSI(codigoNoticia(), desarrollo, periodistaAsociado.nombre, prioridad())
+    }
+/*
+data class MensajeANSI (var codNoticia: String,
+                         var desarrolloNoticia: String,
+                         var nombrePeriodista: String,
+                         var prioridad: String)
+ */
+
+
+
+fun String.words() = this.split(" ") //otro extension method mas
+                                                // funcion de primer orden
+
+class ArticuloComun(fechaEnQueFueEscrito: LocalDate,
                     periodistaAsociado: Periodista,
                     gradoImportancia: Int,
                     titulo: String,
                     desarrollo: String,
-                    val links: MutableList<Noticia> = mutableListOf()):Noticia(codNoticia,fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
+                    val links: MutableList<Noticia> = mutableListOf()):Noticia(fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
 {
 
+    override fun codigoNoticia(): String = "02"
 
     override fun condicionEspecifica(): Boolean {
         return (links.size >= 2)
@@ -74,13 +100,13 @@ class ArticuloComun(codNoticia: String = "02", //hardodeado T_T
 }
 
 
-class NoticiaEncubierta(codNoticia: String = "01",
+class NoticiaEncubierta(
                         fechaEnQueFueEscrito: LocalDate,
                         periodistaAsociado: Periodista,
                         gradoImportancia: Int,
                         titulo: String,
                         desarrollo: String,
-                        val montoPagado: Double):Noticia(codNoticia,fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
+                        val montoPagado: Double):Noticia(fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
 {
     override fun condicionEspecifica(): Boolean {
         return (montoPagado >= 2000000)
@@ -90,33 +116,47 @@ class NoticiaEncubierta(codNoticia: String = "01",
     override fun esEspecial(): Boolean {
         return condicionEspecifica()
     }
+
+    override fun codigoNoticia(): String {
+        return "01"
+    }
 }
 
-class Reportaje(codNoticia: String = "R",
+class Reportaje(
                 fechaEnQueFueEscrito: LocalDate,
                 periodistaAsociado: Periodista,
                 gradoImportancia: Int,
                 titulo: String,
                 desarrollo: String,
-                val entrevistado: String, //String?
-                val esMusico: Boolean = false):Noticia(codNoticia, fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
+                val entrevistado: Entrevistado, //el invitado te dice si se dedica a la musica. Esta informacion no depende del reportaje
+                val esMusico: Boolean = false):Noticia( fechaEnQueFueEscrito, periodistaAsociado, gradoImportancia, titulo, desarrollo)
 {
     override fun condicionEspecifica(): Boolean {
-        return (entrevistado.length % 2 != 0) //que no sea par
+        return (entrevistado.tieneUnNombrePar()) //que no sea par
     }
 
     override fun condicionEspecificaEsSensacionalista(): Boolean {
-        return (entrevistado == "Dibu Martinez")
+        return (entrevistado.esEntrevistaA("Dibu Martinez"))
     }
 
     override fun esEspecial(): Boolean {
         return esMusico
     }
+
+    override fun codigoNoticia(): String {
+        return "R"
+    }
 }
 
 
+data class Entrevistado(val nombre: String,
+                        val seDedicaALaMusica: Boolean)
+{
+    fun tieneUnNombrePar(): Boolean = nombre.odd()
+    fun esEntrevistaA(entrevistado: String) = nombre == entrevistado
+}
 
-
+fun String.odd() = this.length % 2 != 0 //extension method
 
 
 
