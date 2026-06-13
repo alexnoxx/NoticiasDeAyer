@@ -42,7 +42,7 @@ class MailObserver(val mailSender: MailSender,
                    val mailEditor: String): PublicacionObserver {
 
     override fun noticiasQueMeInteresan(publicacion: Publicacion): MutableList<Noticia> {
-        return publicacion.noticias.filter{} //falta completar
+        return publicacion.listaNoticias.filter{} //falta completar
     }                                       // esta es una opcion para no tener que repetir codigo. Para que no tenga que hacer el foreach en los tres observers
                                             // tambien se puede mejorar no podiendo publicacion.noticias
                                             //va haber que refactorizar todo el codigo que sigue
