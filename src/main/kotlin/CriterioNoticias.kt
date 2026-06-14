@@ -26,8 +26,8 @@ class CriterioImportancia(var min: Int, var max: Int):CriterioSeleccionNoticia
     }
 }
 
-class CriterioCombinado(var listaCriterios: List<CriterioSeleccionNoticia> = mutableListOf()): CriterioSeleccionNoticia
-{/*
+class CriterioCombinado(var listaCriterios: MutableList<CriterioSeleccionNoticia> = mutableListOf()): CriterioSeleccionNoticia
+{
     fun agregarCriterio(criterio: CriterioSeleccionNoticia){
         listaCriterios.add(criterio)
     }
@@ -36,7 +36,7 @@ class CriterioCombinado(var listaCriterios: List<CriterioSeleccionNoticia> = mut
     {
         listaCriterios.remove(criterio)
     }
-*/
+
     override fun cumpleCondicion(noticia: Noticia): Boolean
     {
         return listaCriterios.all{condicion -> condicion.cumpleCondicion(noticia)}
