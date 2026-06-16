@@ -2,7 +2,7 @@ package ar.edu.unsam.algo2
 
 import java.time.LocalDate
 
-//La idea es generar una publicacion en estado Brorrador
+//La idea es generar una publicacion en estado Borrador
 // Hay que partir todo lo que esta en el punto 3) en varios metodos ya que se trata de un caso de uso asincronico.
 data class Publicacion(val fecha: LocalDate,
                        val listaNoticias: MutableList<Noticia>) {//lista de noticias que van a formar parte de la publicacion
